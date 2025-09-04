@@ -19,6 +19,18 @@ static int BinarySearch(int[] array, int item, int low, int high)
 }
 
 // SUM OF DIGITS
+static int SumOfDigits(int[] array)
+{
+    if(array == null || array.Length == 0)
+        return 0;
+
+    if(array.Length == 1)
+        return array[0];
+
+    var newArr = array.Where((_, index) => index != 0).ToArray(); ;
+
+    return array[0] + SumOfDigits(newArr);
+}
 
 // NUMBER OF ITEMS
 
