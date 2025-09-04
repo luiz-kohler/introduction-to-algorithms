@@ -1,35 +1,29 @@
-﻿int CalculateFactorial(int number) => number != 1 ? number * CalculateFactorial(number-1) : 1;
-
-static int SumOfDigits(int number, int index = 0)
+﻿// BINARY SEARCH
+static int BinarySearch(int[] array, int item, int low, int high)
 {
-    var numSize = number.ToString().Length;
+    if (array == null || array.Length == 0) 
+        return -1;
 
-    if (numSize == index)
-        return 0;
+    if (low > high) 
+        return -1;
 
-    var arr = number.ToString()
-        .Select(x => int.Parse(x.ToString()))
-        .ToArray();
+    var mid = low + (high - low) / 2;
+    var midItem = array[mid];
 
-    var numToSum = arr[index];
+    if(midItem == item)
+        return mid;
 
-    return numToSum + SumOfDigits(number, index+1);
+    return midItem < item
+        ? BinarySerach(array, item, mid + 1, high)
+        : BinarySerach(array, item, low, mid - 1);
 }
 
-static int SumOfDigits_V2(int n)
-{
-    if (n < 10)
-        return n;
+// SUM OF DIGITS
 
-    var n_rest_of_number_divided_by_10 = n % 10;
-    var n_divided_by_10 = n / 10;
+// NUMBER OF ITEMS
 
-    return n_rest_of_number_divided_by_10 + SumOfDigits_V2(n_divided_by_10);
-}
+// HIGHEST VALUE
 
-static int GetHighestValue(int[] arr)
-{
-    if(arr.Length == 0) return 0;
+// QUICK SORT
 
-    return 0;
-}
+// MERGE SORT
