@@ -16,7 +16,7 @@ static int SumOfDigits(int number, int index = 0)
     return numToSum + SumOfDigits(number, index+1);
 }
 
- static int SumOfDigits_V2(int n)
+static int SumOfDigits_V2(int n)
 {
     if (n < 10)
         return n;
@@ -27,3 +27,9 @@ static int SumOfDigits(int number, int index = 0)
     return n_rest_of_number_divided_by_10 + SumOfDigits_V2(n_divided_by_10);
 }
 
+static int GetHighestValue(int[] arr)
+{
+    if(arr.Length == 0) return 0;
+
+    return 0;
+}
