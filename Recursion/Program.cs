@@ -14,8 +14,8 @@ static int BinarySearch(int[] array, int item, int low, int high)
         return mid;
 
     return midItem < item
-        ? BinarySerach(array, item, mid + 1, high)
-        : BinarySerach(array, item, low, mid - 1);
+        ? BinarySearch(array, item, mid + 1, high)
+        : BinarySearch(array, item, low, mid - 1);
 }
 
 // SUM OF DIGITS
