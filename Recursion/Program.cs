@@ -1,7 +1,7 @@
 ﻿using System.Net.Http.Headers;
 
 Random random = new Random();
-int[] GenerateUniqueNumbers (int quantity) => Enumerable.Range(1, 100)
+int[] GenerateUniqueNumbers (int quantity) => Enumerable.Range(1, 1000)
                                 .OrderBy(x => random.Next()) 
                                 .Take(quantity) 
                                 .ToArray();
@@ -41,81 +41,88 @@ static int SumOfDigits(int[] array)
 }
 
 // QUICK SORT
-int[] QuickSort(int[] array)
-{
-    if (array == null || array.Length == 0)
-        return [];
 
-    else if (array.Length == 1)
+static int[] QuickSort(int[] array)
+{
+    if(array.Length < 2)
         return array;
 
-    else if (array.Length == 2)
-    {
-        return array[0] < array[1]
-            ? array
-            : array.Reverse().ToArray();
-    }
+    if(array.Length == 2)
+        return array[0] < array[1] ? array : array.Reverse().ToArray();
 
     var mid = (array.Length - 1) / 2;
     var pivot = array[mid];
 
-    var highers = array.Where(item => item > pivot).ToArray();
     var smallers = array.Where(item => item < pivot).ToArray();
-    var equals = array.Where(item => item == pivot).ToArray(); 
+    var equals = array.Where(item => item == pivot).ToArray();
+    var highers = array.Where(item => item > pivot).ToArray();
 
-    return [.. QuickSort(smallers), .. equals, .. QuickSort(highers)];
+    return [..QuickSort(smallers), ..equals, ..QuickSort(highers)];
 }
 
 // MERGE SORT
-
-static List<int> MergeSort(List<int> unsortedList)
+static int[] MergeSort(int[] array)
 {
-    if (unsortedList.Count < 2)
-        return unsortedList;
+    if (array.Length < 2)
+        return array;
 
-    var mid = (unsortedList.Count - 1) / 2;
+    var mid = (array.Length - 1) / 2;
 
-    var leftList = unsortedList.Where((item, index) => index <= mid).ToList();
-    var rightList = unsortedList.Where((item, index) => index > mid).ToList();
+    var left = array.Where((_, index) => index <= mid).ToArray();
+    var right = array.Where((_, index) => index > mid).ToArray();
 
-    leftList = MergeSort(leftList);
-    rightList = MergeSort(rightList);
+    left = MergeSort(left);
+    right = MergeSort(right);
 
-    return Merge(leftList, rightList);
+    return Merge(left, right);
 }
 
-static List<int> Merge(List<int> leftList, List<int> rightList)
+static int[] Merge(int[] left, int[] right)
 {
-    var sortedList = new List<int>();
-    
-    while(leftList.Count > 0 || rightList.Count > 0)
+    var sorted_array = new int[left.Length + right.Length];
+
+    var sorted_index = 0;
+    int left_index = 0;
+    int right_index = 0;
+
+    int max_left_index = left.Length - 1;
+    int max_right_index = right.Length - 1;
+
+    while (left_index <= max_left_index || right_index <= max_right_index)
     {
-        if(leftList.Count > 0 && rightList.Count > 0)
+        if (left_index <= max_left_index && right_index <= max_right_index)
         {
-            if (leftList[0] <= rightList[0])
+            var item_from_left = left[left_index];
+            var item_from_right = right[right_index];
+
+            if(item_from_left <= item_from_right)
             {
-                sortedList.Add(leftList[0]);
-                leftList.RemoveAt(0);
+                sorted_array[sorted_index] = item_from_left;
+                sorted_index++;
+                left_index++;
             }
-            else if (rightList[0] <= leftList[0])
+            else
             {
-                sortedList.Add(rightList[0]);
-                rightList.RemoveAt(0);
+                sorted_array[sorted_index] = item_from_right;
+                sorted_index++;
+                right_index++;
             }
         }
-
-        else if (leftList.Count > 0 && rightList.Count == 0)
+        else if (left_index <= max_left_index)
         {
-            sortedList.Add(leftList[0]);
-            leftList.RemoveAt(0);
+            var item_from_left = left[left_index];
+            sorted_array[sorted_index] = item_from_left;
+            sorted_index++;
+            left_index++;
         }
-
-        else if (rightList.Count > 0 && leftList.Count == 0)
+        else if (right_index <= max_right_index)
         {
-            sortedList.Add(rightList[0]);
-            rightList.RemoveAt(0);
+            var item_from_right = right[right_index];
+            sorted_array[sorted_index] = item_from_right;
+            sorted_index++;
+            right_index++;
         }
     }
 
-    return sortedList;
+    return sorted_array;
 }
