@@ -1,4 +1,10 @@
-﻿// BINARY SEARCH
+﻿Random random = new Random();
+int[] GenerateUniqueNumbers(int quantity) => Enumerable.Range(10, 50)
+                                .OrderBy(x => random.Next())
+                                .Take(quantity)
+                                .ToArray();
+
+// BINARY SEARCH
 static int BinarySearch(int[] array, int item, int low, int high)
 {
     if (array == null || array.Length == 0)
@@ -128,4 +134,37 @@ static int[] Merge(int[] left, int[] right)
     }
 
     return sorted_array;
+}
+
+
+// BUBBLE SORT
+static int[] BubbleSort(int[] array)
+{
+    for (int i = 0; i < array.Length - 1; i++)
+    {
+        for (int j = 0; j < array.Length - i - 1; j++)
+        {
+            if (array[j] > array[j+1])
+            {
+                var temp = array[j];
+
+                array[j] = array[j+1];
+                array[j+1] = temp;
+            }
+        }
+    }
+
+    return array;
+}
+
+
+
+for (int i = 0; i <= 5; i++)
+{
+    var numbers = GenerateUniqueNumbers(10);
+    Console.WriteLine($" ");
+    Console.WriteLine($"- Unsorted : [{string.Join(", ", numbers)}]");
+    Console.WriteLine($"- My Sort  : [{string.Join(", ", BubbleSort(numbers))}]");
+    Console.WriteLine($"- C# Sort  : [{string.Join(", ", numbers.Order())}]");
+    Console.WriteLine($" ");
 }
