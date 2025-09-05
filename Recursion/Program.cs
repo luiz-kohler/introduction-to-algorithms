@@ -1,4 +1,6 @@
-﻿using System.Net.Http.Headers;
+﻿using System.Collections.Generic;
+using System.Net.Http.Headers;
+using System.Reflection;
 
 Random random = new Random();
 int[] GenerateUniqueNumbers (int quantity) => Enumerable.Range(1, 1000)
@@ -41,7 +43,6 @@ static int SumOfDigits(int[] array)
 }
 
 // QUICK SORT
-
 static int[] QuickSort(int[] array)
 {
     if(array.Length < 2)
@@ -50,14 +51,26 @@ static int[] QuickSort(int[] array)
     if(array.Length == 2)
         return array[0] < array[1] ? array : array.Reverse().ToArray();
 
-    var mid = (array.Length - 1) / 2;
-    var pivot = array[mid];
+    var pivot = GetMedianOfThreePivot(array);
 
     var smallers = array.Where(item => item < pivot).ToArray();
     var equals = array.Where(item => item == pivot).ToArray();
     var highers = array.Where(item => item > pivot).ToArray();
 
     return [..QuickSort(smallers), ..equals, ..QuickSort(highers)];
+}
+
+static int GetMedianOfThreePivot(int[] array)
+{
+    var first = array[0];
+    var middle = array[(array.Length - 1) / 2];
+    var last = array[array.Length - 1];
+
+    if (first > middle) (first, middle) = (middle, first);
+    if (middle > last) (middle, last) = (last, middle);
+    if (first > middle) (first, middle) = (middle, first);
+
+    return middle;
 }
 
 // MERGE SORT
