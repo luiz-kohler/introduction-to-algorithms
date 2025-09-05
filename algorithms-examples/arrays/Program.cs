@@ -1,26 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Net.Http.Headers;
-using System.Reflection;
-
-Random random = new Random();
-int[] GenerateUniqueNumbers (int quantity) => Enumerable.Range(1, 1000)
-                                .OrderBy(x => random.Next()) 
-                                .Take(quantity) 
-                                .ToArray();
-
-// BINARY SEARCH
+﻿// BINARY SEARCH
 static int BinarySearch(int[] array, int item, int low, int high)
 {
-    if (array == null || array.Length == 0) 
+    if (array == null || array.Length == 0)
         return -1;
 
-    if (low > high) 
+    if (low > high)
         return -1;
 
     var mid = low + (high - low) / 2;
     var midItem = array[mid];
 
-    if(midItem == item)
+    if (midItem == item)
         return mid;
 
     return midItem < item
@@ -31,10 +21,10 @@ static int BinarySearch(int[] array, int item, int low, int high)
 // SUM OF DIGITS
 static int SumOfDigits(int[] array)
 {
-    if(array == null || array.Length == 0)
+    if (array == null || array.Length == 0)
         return 0;
 
-    if(array.Length == 1)
+    if (array.Length == 1)
         return array[0];
 
     var newArr = array.Where((_, index) => index != 0).ToArray(); ;
@@ -45,10 +35,10 @@ static int SumOfDigits(int[] array)
 // QUICK SORT
 static int[] QuickSort(int[] array)
 {
-    if(array.Length < 2)
+    if (array.Length < 2)
         return array;
 
-    if(array.Length == 2)
+    if (array.Length == 2)
         return array[0] < array[1] ? array : array.Reverse().ToArray();
 
     var pivot = GetMedianOfThreePivot(array);
@@ -57,7 +47,7 @@ static int[] QuickSort(int[] array)
     var equals = array.Where(item => item == pivot).ToArray();
     var highers = array.Where(item => item > pivot).ToArray();
 
-    return [..QuickSort(smallers), ..equals, ..QuickSort(highers)];
+    return [.. QuickSort(smallers), .. equals, .. QuickSort(highers)];
 }
 
 static int GetMedianOfThreePivot(int[] array)
@@ -108,7 +98,7 @@ static int[] Merge(int[] left, int[] right)
             var item_from_left = left[left_index];
             var item_from_right = right[right_index];
 
-            if(item_from_left <= item_from_right)
+            if (item_from_left <= item_from_right)
             {
                 sorted_array[sorted_index] = item_from_left;
                 sorted_index++;
